@@ -31,10 +31,12 @@ builder.Services.AddDbContext<DBContext>(options =>
         var connUser = userPassSide.Split(":")[0];
         var connPass = userPassSide.Split(":")[1];
         var connHost = hostSide.Split("/")[0];
+        var connPort = connHost.Split(":")[1];
+        connHost = connHost.Split(":")[0];
         var connDb = hostSide.Split("/")[1].Split("?")[0];
 
 
-        connStr = $"server={connHost};Uid={connUser};Pwd={connPass};Database={connDb}";
+        connStr = $"server={connHost};Port={connPort};Uid={connUser};Pwd={connPass};Database={connDb}";
 
 
 
