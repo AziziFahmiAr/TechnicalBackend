@@ -22,9 +22,9 @@ namespace TechnicalBackend.Entity
         [Required]
         public string City { get; set; }
         [Required]
-        public virtual List<TTDeveloperHobbies> TTDeveloperHobbies { get; set; }
+        public virtual List<TTDeveloperHobbies>? TTDeveloperHobbies { get; set; }
         [Required]
-        public virtual List<TTDeveloperSkills> TTDeveloperSkills { get; set; }
+        public virtual List<TTDeveloperSkills>? TTDeveloperSkills { get; set; }
         [Required]
         public DateTime lastUpdate { get; set; }
     }

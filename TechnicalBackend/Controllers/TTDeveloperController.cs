@@ -31,7 +31,7 @@ namespace TechnicalBackend.Controllers
 
         [HttpPost]
         [Route("save")]
-        public TTDeveloperGetDetailModel Save(TTDeveloperGetDetailModel model)
+        public TTDeveloperGetDetailModel Save(TTDeveloperRequestModel model)
         {
             return TTDeveloperService.saveData(model);
         }

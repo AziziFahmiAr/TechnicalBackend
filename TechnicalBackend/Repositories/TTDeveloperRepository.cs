@@ -83,12 +83,12 @@ namespace TechnicalBackend.Repositories
 
         public List<TTDeveloperHobbies> GetAllHobbyData(Guid Id)
         {
-            return Db.Set<TTDeveloperHobbies>().Where(x => x.TTDeveloper.Id == Id).ToList();
+            return Db.Set<TTDeveloperHobbies>().Where(x => x.TTDeveloperr.Id == Id).ToList();
         }
 
         public List<TTDeveloperSkills> GetAllSkillsData(Guid Id)
         {
-            return Db.Set<TTDeveloperSkills>().Where(x => x.TTDeveloper.Id == Id).ToList();
+            return Db.Set<TTDeveloperSkills>().Where(x => x.TTDeveloperr.Id == Id).ToList();
         }
 
         public TTDeveloper GetDataWithID(Guid ID)

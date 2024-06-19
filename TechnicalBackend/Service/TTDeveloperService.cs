@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using TechnicalBackend.DBEntities;
 using TechnicalBackend.Entity;
 using TechnicalBackend.Models;
@@ -10,7 +11,7 @@ namespace TechnicalBackend.Service
     {
         List<TTDeveloperGetAllModel> getAllData();
         TTDeveloperGetDetailModel getDataDetails(Guid Id);
-        TTDeveloperGetDetailModel saveData(TTDeveloperGetDetailModel data);
+        TTDeveloperGetDetailModel saveData(TTDeveloperRequestModel data);
         TTDeveloperGetDetailModel updateData(TTDeveloperGetDetailModel data);
         string deleteData(Guid Id);
     }
@@ -18,6 +19,7 @@ namespace TechnicalBackend.Service
     public class TTDeveloperService : ITTDeveloperService
     {
         readonly DBContext Db = new();
+        public IMapper Mapper { get; set; }
 
         public TTDeveloperService(DBContext dbContext)
         {
@@ -92,11 +94,11 @@ namespace TechnicalBackend.Service
             return res;
         }
 
-        public TTDeveloperGetDetailModel saveData(TTDeveloperGetDetailModel res)
+        public TTDeveloperGetDetailModel saveData(TTDeveloperRequestModel res)
         {
             TTDeveloper devData = new TTDeveloper
             {
-                Id = res.Id,
+                Id = Guid.Empty,
                 Name = res.Name,
                 Telephone = res.Telephone,
                 Email = res.Email,
@@ -105,7 +107,7 @@ namespace TechnicalBackend.Service
                 Address2 = res.Address2,
                 Address3 = res.Address3,
                 Postcode = res.Postcode,
-                lastUpdate = res.lastUpdate
+                lastUpdate = res.lastUpdate,
             };
             var data = SaveData(devData);
 
@@ -125,8 +127,20 @@ namespace TechnicalBackend.Service
             {
                 foreach (var h in res.Hobbies)
                 {
-                    var hobby = SaveHobbiesData(h);
-                    model.Hobbies.Add(hobby);
+                    TTDeveloperHobbies hobi = new TTDeveloperHobbies
+                    {
+                        Hobby = h.Hobby,
+                        TTDeveloperr = data,
+                        Id = Guid.Empty
+                    };
+                    var hobby = SaveHobbiesData(hobi);
+                    try
+                    {
+                        model.Hobbies.Add(hobby);
+                    }
+                    catch {
+                        continue;
+                    }
                 }
             }
 
@@ -134,8 +148,23 @@ namespace TechnicalBackend.Service
             {
                 foreach (var s in res.Skills)
                 {
-                    var skill = SaveSkillData(s);
-                    model.Skills.Add(skill);
+                    TTDeveloperSkills skil = new TTDeveloperSkills
+                    {
+                        Id = Guid.Empty,
+                        TTDeveloperr = data,
+                        Skill = s.Skill,
+                        Year_of_exp = s.Year_of_exp,
+                        Level = s.Level
+                    };
+                    var skill = SaveSkillData(skil);
+                    try
+                    {
+                        model.Skills.Add(skill);
+                    }
+                    catch
+                    {
+                        continue;
+                    }
                 }
             }
 
@@ -175,8 +204,14 @@ namespace TechnicalBackend.Service
             {
                 foreach (var h in res.Hobbies)
                 {
-                    var hobby = SaveHobbiesData(h);
-                    model.Hobbies.Add(hobby);
+                    var hobby = UpdateHobbiesData(h);
+                    try
+                    {
+                        model.Hobbies.Add(hobby);
+                    }
+                    catch {
+                        continue;
+                    }
                 }
             }
 
@@ -184,8 +219,12 @@ namespace TechnicalBackend.Service
             {
                 foreach (var s in res.Skills)
                 {
-                    var skill = SaveSkillData(s);
-                    model.Skills.Add(skill);
+                    var skill = UpdateSkillData(s);
+                    try
+                    {
+                        model.Skills.Add(skill);
+                    }
+                    catch { continue; }
                 }
             }
 
@@ -247,12 +286,12 @@ namespace TechnicalBackend.Service
 
         private List<TTDeveloperHobbies> GetAllHobbyData(Guid Id)
         {
-            return Db.TTDeveloperHobbies.AsNoTracking().Where(x => x.TTDeveloper.Id == Id).ToList();
+            return Db.TTDeveloperHobbies.AsNoTracking().Where(x => x.TTDeveloperr.Id == Id).ToList();
         }
 
         private List<TTDeveloperSkills> GetAllSkillsData(Guid Id)
         {
-            return Db.TTDeveloperSkills.AsNoTracking().Where(x => x.TTDeveloper.Id == Id).ToList();
+            return Db.TTDeveloperSkills.AsNoTracking().Where(x => x.TTDeveloperr.Id == Id).ToList();
         }
 
         private void DeleteHobbiesData(Guid ID)

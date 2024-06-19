@@ -9,7 +9,7 @@ namespace TechnicalBackend.Entity
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
-        public virtual TTDeveloper TTDeveloper { get; set; }
+        public virtual TTDeveloper? TTDeveloperr { get; set; }
         [Required]
         public string Hobby { get; set; }
     }

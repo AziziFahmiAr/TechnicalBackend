@@ -30,7 +30,7 @@ namespace TechnicalBackend.DBEntities
             {
                 entity.HasKey(r => r.Id);
                 entity.Property<Guid>("TTDeveloper_Id");
-                entity.HasOne(f => f.TTDeveloper)
+                entity.HasOne(f => f.TTDeveloperr)
                 .WithMany(f => f.TTDeveloperHobbies)
                 .HasForeignKey("TTDeveloper_Id")
                 .IsRequired()
@@ -41,7 +41,7 @@ namespace TechnicalBackend.DBEntities
             {
                 entity.HasKey(r => r.Id);
                 entity.Property<Guid>("TTDeveloper_Id");
-                entity.HasOne(f => f.TTDeveloper)
+                entity.HasOne(f => f.TTDeveloperr)
                 .WithMany(f => f.TTDeveloperSkills)
                 .HasForeignKey("TTDeveloper_Id")
                 .IsRequired()
