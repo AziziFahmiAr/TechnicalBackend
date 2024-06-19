@@ -4,7 +4,7 @@ namespace TechnicalBackend.Models
 {
     public class TTDeveloperModel
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Telephone { get; set; }
@@ -40,12 +40,12 @@ namespace TechnicalBackend.Models
     {
         public string Skill { get; set; }
         public int Level { get; set; }
-        public int Year_of_exp { get; set; }
+        public int Year_of_experience { get; set; }
     }
 
     public class TTDeveloperGetAllModel
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Telephone { get; set; }

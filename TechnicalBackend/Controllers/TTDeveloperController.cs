@@ -24,7 +24,7 @@ namespace TechnicalBackend.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public TTDeveloperGetDetailModel Get(Guid id)
+        public TTDeveloperGetDetailModel Get(int id)
         {
             return TTDeveloperService.getDataDetails(id);
         }
@@ -45,7 +45,7 @@ namespace TechnicalBackend.Controllers
 
         [HttpDelete]
         [Route("delete")]
-        public string Delete(Guid id)
+        public string Delete(int id)
         {
             return TTDeveloperService.deleteData(id);
         }

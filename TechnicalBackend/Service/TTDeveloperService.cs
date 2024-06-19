@@ -3,17 +3,16 @@ using Microsoft.EntityFrameworkCore;
 using TechnicalBackend.DBEntities;
 using TechnicalBackend.Entity;
 using TechnicalBackend.Models;
-using TechnicalBackend.Repositories;
 
 namespace TechnicalBackend.Service
 {
     public interface ITTDeveloperService
     {
         List<TTDeveloperGetAllModel> getAllData();
-        TTDeveloperGetDetailModel getDataDetails(Guid Id);
+        TTDeveloperGetDetailModel getDataDetails(int Id);
         TTDeveloperGetDetailModel saveData(TTDeveloperRequestModel data);
         TTDeveloperGetDetailModel updateData(TTDeveloperGetDetailModel data);
-        string deleteData(Guid Id);
+        string deleteData(int Id);
     }
 
     public class TTDeveloperService : ITTDeveloperService
@@ -26,7 +25,7 @@ namespace TechnicalBackend.Service
             Db = dbContext;
         }
 
-        public string deleteData(Guid Id)
+        public string deleteData(int Id)
         {
             var del = GetDataWithID(Id);
             bool res = false;
@@ -72,7 +71,7 @@ namespace TechnicalBackend.Service
             return res;
         }
 
-        public TTDeveloperGetDetailModel getDataDetails(Guid Id)
+        public TTDeveloperGetDetailModel getDataDetails(int Id)
         {
             TTDeveloperGetDetailModel res = new TTDeveloperGetDetailModel();
             var data = GetDataWithID(Id);
@@ -98,7 +97,7 @@ namespace TechnicalBackend.Service
         {
             TTDeveloper devData = new TTDeveloper
             {
-                Id = Guid.Empty,
+                Id = 0,
                 Name = res.Name,
                 Telephone = res.Telephone,
                 Email = res.Email,
@@ -131,7 +130,7 @@ namespace TechnicalBackend.Service
                     {
                         Hobby = h.Hobby,
                         TTDeveloperr = data,
-                        Id = Guid.Empty
+                        Id = 0
                     };
                     var hobby = SaveHobbiesData(hobi);
                     try
@@ -150,10 +149,10 @@ namespace TechnicalBackend.Service
                 {
                     TTDeveloperSkills skil = new TTDeveloperSkills
                     {
-                        Id = Guid.Empty,
+                        Id = 0,
                         TTDeveloperr = data,
                         Skill = s.Skill,
-                        Year_of_exp = s.Year_of_exp,
+                        Year_of_experience = s.Year_of_experience,
                         Level = s.Level
                     };
                     var skill = SaveSkillData(skil);
@@ -232,7 +231,7 @@ namespace TechnicalBackend.Service
         }
 
         #region Private Method
-        private TTDeveloper GetDataWithID(Guid ID)
+        private TTDeveloper GetDataWithID(int ID)
         {
             return Db.TTDeveloper.Find(ID);
         }
@@ -284,17 +283,17 @@ namespace TechnicalBackend.Service
             return tTDeveloperSkill;
         }
 
-        private List<TTDeveloperHobbies> GetAllHobbyData(Guid Id)
+        private List<TTDeveloperHobbies> GetAllHobbyData(int Id)
         {
             return Db.TTDeveloperHobbies.AsNoTracking().Where(x => x.TTDeveloperr.Id == Id).ToList();
         }
 
-        private List<TTDeveloperSkills> GetAllSkillsData(Guid Id)
+        private List<TTDeveloperSkills> GetAllSkillsData(int Id)
         {
             return Db.TTDeveloperSkills.AsNoTracking().Where(x => x.TTDeveloperr.Id == Id).ToList();
         }
 
-        private void DeleteHobbiesData(Guid ID)
+        private void DeleteHobbiesData(int ID)
         {
             var dev = GetAllHobbyData(ID);
 
@@ -308,7 +307,7 @@ namespace TechnicalBackend.Service
             }
         }
 
-        private void DeleteSkillData(Guid ID)
+        private void DeleteSkillData(int ID)
         {
             var dev = GetAllSkillsData(ID);
             if (dev != null)

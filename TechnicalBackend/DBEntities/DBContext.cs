@@ -29,7 +29,7 @@ namespace TechnicalBackend.DBEntities
             modelBuilder.Entity<TTDeveloperHobbies>(entity =>
             {
                 entity.HasKey(r => r.Id);
-                entity.Property<Guid>("TTDeveloper_Id");
+                entity.Property<int>("TTDeveloper_Id");
                 entity.HasOne(f => f.TTDeveloperr)
                 .WithMany(f => f.TTDeveloperHobbies)
                 .HasForeignKey("TTDeveloper_Id")
@@ -40,7 +40,7 @@ namespace TechnicalBackend.DBEntities
             modelBuilder.Entity<TTDeveloperSkills>(entity =>
             {
                 entity.HasKey(r => r.Id);
-                entity.Property<Guid>("TTDeveloper_Id");
+                entity.Property<int>("TTDeveloper_Id");
                 entity.HasOne(f => f.TTDeveloperr)
                 .WithMany(f => f.TTDeveloperSkills)
                 .HasForeignKey("TTDeveloper_Id")
