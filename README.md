@@ -2,7 +2,7 @@ Dear examiner,
 
 Welcome to Muhammad Azizi Fahmi's portfolio.
 
-This is Backend for the technical taask which is to manage Freelance Developer for CDN.
+This is Simple Web API which is to manage Freelance Developer for CDN.
 
 As to implement this one, I implement using Dependency Injection to inject the data.
 For short, dependency injection in we inject the class into another class to be used. 
